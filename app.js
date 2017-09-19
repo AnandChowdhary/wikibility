@@ -18,11 +18,15 @@ app.factory("wikiService", function($http, $sce) {
 			var trustedUrl = $sce.trustAsResourceUrl(url);
 			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
 		},
+		article: function(params) {
+			var url = "https://en.wikipedia.org/w/api.php?action=parse&prop=text&page=" + params.q + "&format=json";
+			var trustedUrl = $sce.trustAsResourceUrl(url);
+			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
+		},
 		nSections: function(params) {
 			var url = "https://en.wikipedia.org/w/api.php?action=parse&page=" + params.q + "&prop=sections&format=json";
 			var trustedUrl = $sce.trustAsResourceUrl(url);
 			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
-			
 		}
 	};
 	return wikiService;
@@ -40,14 +44,19 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 		$scope.wikiData = $sce.trustAsHtml(wikiData.data.parse.text["*"]);
 		$timeout(function() {
 			angular.element("sup").each(function() {
-				$(this).html($(this).html().replace("[", "").replace("]", ""));
+				$(this).find("a").html("");
 			});
 		}, 1);
 	});
-	$scope.sectionsArray = [];
+	wikiService.article({ q: $routeParams["slug"] }).then(function(wikiData) {
+		var p = wikiData.data.parse.text["*"].split('<div id="toc" class="toc">')[1];
+		//p = p.split("</ul>")[1];
+		$scope.sections = $sce.trustAsHtml(p);
+	});
+	/*$scope.sectionsArray = [];
 	wikiService.nSections({ q: $routeParams["slug"] }).then(function(data) {
-		console.log(data.data.parse.sections);
 		var count = 0;
+		console.log(data.data.parse.sections);
 		for (var i = 0; i < data.data.parse.sections.length - 1; i++) {
 			if (data.data.parse.sections[i].toclevel === 1) {
 				count++;
@@ -63,6 +72,7 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 			var a = j;
 			wikiService.query({ q: $routeParams["slug"], section: $scope.sectionsArray[j].id }).then(function(wikiData) {
 				var raw = wikiData.data.parse.text["*"];
+				console.log(raw);
 				raw = raw.split("mw-headline")[1];
 				raw = raw.split(">")[1];
 				raw = raw.split("<")[0];
@@ -71,11 +81,23 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 						$scope.sectionsArray[k].text = wikiData.data.parse.text["*"];
 						count2++;
 						if (count2 === $scope.sectionsArray.length) {
-							console.log($scope.sectionsArray);
+							var p = "";
+							for (var l = 0; l < $scope.sectionsArray.length; l++) {
+								p += $scope.sectionsArray[l].text;
+							}
+							$scope.sections = $sce.trustAsHtml(p);
+							$timeout(function() {
+								var g = 0;
+								angular.element("sup").each(function() {
+									g++;
+									$(this).find("a").html(g);
+									$(this).find("a").attr("href", "#cite_note-" + g);
+								});
+							}, 1);
 						}
 					}
 				}
 			});
 		}
-	});
+	});*/
 });
