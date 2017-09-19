@@ -1,3 +1,81 @@
-body {
-	
+@import url("https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700");
+
+table.metadata,
+.mw-editsection,
+.mw-references-wrap {
+	display: none;
+}
+
+article {
+	max-width: 960px;
+	margin: 5rem auto;
+	line-height: 1.7;
+	font-size: 20px;
+	font-family: "Vollkorn", "Georgia", serif;
+	h1.article-title {
+		text-align: center;
+		margin-bottom: 2em;
+	}
+	h2 {
+		margin-top: 1.5em;
+	}
+	h3 {
+		margin-top: 1em;
+	}
+	.n_section {
+		max-width: 720px;
+		margin-left: auto;
+		margin-right: auto;
+		&::before {
+			content: "";
+			display: block;
+			clear: both;
+		}
+	}
+}
+
+table.infobox {
+	font-size: 75%;
+	background: whitesmoke;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	float: right;
+	margin: 0 0 3em 3em;
+	width: 25em !important;
+	caption {
+		text-align: center;
+		font-size: 80%;
+	}
+	ul {
+		margin: 0;
+		list-style: none;
+		padding: 0;
+	}
+	td {
+		vertical-align: top;
+		padding-right: 1.75em;
+		padding-bottom: 0.5em;
+	}
+	th {
+		vertical-align: top;
+		padding-left: 1.75em;
+		padding-bottom: 0.5em;
+	}
+	tr:first-child {
+		td, th {
+			padding: 1.5em 0;
+		}
+	}
+	tr:last-child {
+		td, th {
+			padding-bottom: 1.5em;
+		}
+	}
+}
+
+sup.reference {
+	font-size: 65%;
+	margin-left: 3px;
+	a {
+		color: #555;
+	}
 }
