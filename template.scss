@@ -75,6 +75,11 @@ table.metadata,
 .paradeiser_icon_canvas {
 	transform: scale(1.7) translateY(2px);
 }
+.honorific-suffix {
+	a {
+		margin: 0 5px;
+	}
+}
 
 a {
 	color: #0062cc;
@@ -140,6 +145,26 @@ article {
 				margin-right: 0;
 			}
 		}
+	}
+}
+
+div.quotebox {
+	float: right;
+	margin: 1.5em -5em 1.5em 2em !important;
+	padding-left: 2em !important;
+	border: none !important;
+	background: none !important;
+	font-style: italic;
+	font-size: 105% !important;
+	width: 40% !important;
+	border-left: 10px solid #0056b3 !important;
+	cite {
+		font-style: normal;
+		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+		font-size: 67%;
+		line-height: 1.5;
+		color: #777;
+		margin-top: 0.75em;
 	}
 }
 
