@@ -34,24 +34,39 @@ app.factory("wikiService", function($http, $sce) {
 
 app.controller("homeCtrl", function($scope, $location) {
 	$scope.searchArticle = function() {
-		$location.path("/wiki/" + $scope.searchModel.replace(/ /g,"_"));
+		$location.path("/wiki/" + $scope.searchModel.replace(/ /g, "_"));
 	};
 });
 
 app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, $timeout) {
 	wikiService.query({ q: $routeParams["slug"], section: 0 }).then(function(wikiData) {
+		wikiService.article({ q: $routeParams["slug"] }).then(function(wikiData) {
+			var p = wikiData.data.parse.text["*"].split('<div id="toc" class="toc">')[1];
+			$scope.sections = $sce.trustAsHtml(p);
+			$timeout(function() {
+				smartquotes();
+				var g = 0;
+				angular.element("sup").each(function() {
+					g++;
+					$(this).find("a").html(g);
+					$(this).find("a").attr("href", "#cite_note-" + g);
+				});
+				angular.element("a").each(function() {
+					var a = new RegExp("/" + window.location.host + "/");
+					if(!a.test(this.href)) {
+						$(this).attr("target", "_blank");
+					}
+				 });
+			}, 1);
+		});
 		$scope.wikiTitle = wikiData.data.parse.title;
 		$scope.wikiData = $sce.trustAsHtml(wikiData.data.parse.text["*"]);
 		$timeout(function() {
+			smartquotes();
 			angular.element("sup").each(function() {
 				$(this).find("a").html("");
 			});
 		}, 1);
-	});
-	wikiService.article({ q: $routeParams["slug"] }).then(function(wikiData) {
-		var p = wikiData.data.parse.text["*"].split('<div id="toc" class="toc">')[1];
-		//p = p.split("</ul>")[1];
-		$scope.sections = $sce.trustAsHtml(p);
 	});
 	/*$scope.sectionsArray = [];
 	wikiService.nSections({ q: $routeParams["slug"] }).then(function(data) {

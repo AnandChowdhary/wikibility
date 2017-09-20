@@ -6,6 +6,20 @@ table.metadata,
 	display: none;
 }
 
+#masthead {
+	background: gray;
+	position: fixed;
+	top: 0; left: 0; right: 0;
+	height: 50px;
+}
+
+a {
+	color: #0062cc;
+	&[href*="redlink=1"] {
+		color: #bb3c59;
+	}
+}
+
 article {
 	max-width: 960px;
 	margin: 5rem auto;
@@ -79,6 +93,6 @@ sup.reference {
 	font-size: 65%;
 	margin-left: 3px;
 	a {
-		color: #555;
+		color: #777;
 	}
 }
