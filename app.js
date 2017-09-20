@@ -27,18 +27,30 @@ app.factory("wikiService", function($http, $sce) {
 			var url = "https://en.wikipedia.org/w/api.php?action=parse&page=" + params.q + "&prop=sections&format=json";
 			var trustedUrl = $sce.trustAsResourceUrl(url);
 			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
+		},
+		search: function(params) {
+			var url = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + params.q + "&utf8=&format=json";
+			var trustedUrl = $sce.trustAsResourceUrl(url);
+			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
 		}
 	};
 	return wikiService;
 });
 
-app.controller("homeCtrl", function($scope, $location) {
+app.controller("homeCtrl", function($scope, $location, wikiService) {
 	$scope.searchArticle = function() {
 		$location.path("/wiki/" + $scope.searchModel.replace(/ /g, "_"));
 	};
+	$scope.searchWiki = function() {
+		if ($scope.searchModel !== undefined) {
+			wikiService.search({ q: $scope.searchModel, section: 0 }).then(function(wikiData) {
+				$scope.searchResults = wikiData.data.query.search;
+			});
+		}
+	}
 });
 
-app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, $timeout) {
+app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, $timeout, $location) {
 
     document.getElementById("paradeiser-dropdown").addEventListener("click", function(event){
         event.preventDefault();
@@ -64,6 +76,9 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 			var p = wikiData.data.parse.text["*"].split('<div id="toc" class="toc">')[1];
 			$scope.sections = $sce.trustAsHtml(p);
 			$timeout(function() {
+				if (angular.element("#redirectMsg")) {
+					$location.path(angular.element(".redirectText a").attr("href"));
+				}
 				smartquotes();
 				var g = 0;
 				angular.element("sup").each(function() {
@@ -144,4 +159,10 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 			});
 		}
 	});*/
+});
+
+app.filter("wikipediafy", function() {
+	return function(str) {
+		return str.replace(/ /g, "_");
+	};
 });

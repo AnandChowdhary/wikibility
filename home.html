@@ -1,8 +1,18 @@
-<h1>Wikibility</h1>
-<form ng-submit="searchArticle()">
-	<div class="form-group">
-		<label for="search">Search</label>
-		<input ng-model="searchModel" type="search" class="form-control" id="search" placeholder="Search for articles...">
-	</div>
-	<button type="submit" class="btn btn-primary">Search</button>
-</form>
+<div class="vertical-middle" style="zoom: 1.3">
+	<h1 class="logo">Wikibility</h1>
+	<form ng-submit="searchArticle()">
+		<div class="input-group mt-4">
+			<input ng-keyup="searchWiki()" type="text" class="form-control" ng-model="searchModel" placeholder="Search for..." aria-label="Search for..." autofocus required>
+			<span class="input-group-btn">
+				<button class="btn btn-secondary" type="button">Search</button>
+			</span>
+		</div>
+		<ul class="autocomplete">
+			<li ng-repeat="result in searchResults">
+				<a href="/wiki/{{ result.title | wikipediafy }}">
+					{{ result.title }}
+				</a>
+			</li>
+		</ul>
+	</form>
+</div>
