@@ -6,11 +6,17 @@ table.metadata,
 	display: none;
 }
 
-#masthead {
-	background: gray;
-	position: fixed;
-	top: 0; left: 0; right: 0;
-	height: 50px;
+.paradeiser {
+	background: rgba(255, 255, 255, 0.8);
+	box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.02), 0 2px 10px 0 rgba(0, 0, 0, 0.05);	
+	span.logo {
+		font-family: "Vollkorn", "Georgia", serif;
+		color: #000;
+		font-size: 255%;
+	}
+}
+.paradeiser_icon_canvas {
+	transform: scale(1.7) translateY(2px);
 }
 
 a {
@@ -22,7 +28,7 @@ a {
 
 article {
 	max-width: 960px;
-	margin: 5rem auto;
+	margin: 7.5rem auto 5rem auto;
 	line-height: 1.7;
 	font-size: 20px;
 	font-family: "Vollkorn", "Georgia", serif;
@@ -47,6 +53,22 @@ article {
 		}
 	}
 	#toc {
+		display: none;
+	}
+}
+
+.ref-tooltip {
+	position: absolute;
+	display: none;
+	background: rgba(255, 255, 255, 0.85);
+	border-radius: 5px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+	backdrop-filter: blur(10px) saturate(100%);	
+	width: 300px;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	padding: 10px 13px;
+	font-size: 85%;
+	.mw-cite-backlink {
 		display: none;
 	}
 }
@@ -86,6 +108,16 @@ table.infobox {
 		td, th {
 			padding-bottom: 1.5em;
 		}
+	}
+}
+
+@media (max-width: 768px) {
+	article {
+		zoom: 0.85;
+	}
+	table.infobox {
+		margin: auto;
+		float: none;
 	}
 }
 

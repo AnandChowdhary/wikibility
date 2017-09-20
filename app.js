@@ -39,6 +39,26 @@ app.controller("homeCtrl", function($scope, $location) {
 });
 
 app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, $timeout) {
+
+    document.getElementById("paradeiser-dropdown").addEventListener("click", function(event){
+        event.preventDefault();
+        document.getElementById("paradeiser-more").classList.toggle("open");
+    });
+
+    document.getElementById("greybox").addEventListener("click", function(event){
+        event.preventDefault();
+        document.getElementById("paradeiser-more").classList.remove("open");
+    });
+
+    var myElement = document.querySelector(".paradeiser");
+    var headroom  = new Headroom(myElement, {
+        tolerance : 5,
+        onUnpin : function() {
+            document.getElementById("paradeiser-more").classList.remove("open");
+        }
+    });
+	headroom.init();
+
 	wikiService.query({ q: $routeParams["slug"], section: 0 }).then(function(wikiData) {
 		wikiService.article({ q: $routeParams["slug"] }).then(function(wikiData) {
 			var p = wikiData.data.parse.text["*"].split('<div id="toc" class="toc">')[1];
@@ -50,6 +70,15 @@ app.controller("articleCtrl", function($scope, $routeParams, $sce, wikiService, 
 					g++;
 					$(this).find("a").html(g);
 					$(this).find("a").attr("href", "#cite_note-" + g);
+					$(this).mouseover(function() {
+						$(".ref-tooltip").fadeIn(200);
+						$(".ref-tooltip").css("left", $(this).offset().left + "px");
+						$(".ref-tooltip").css("top", ($(this).offset().top + 25) + "px");
+						$(".ref-tooltip").html(angular.element($(this).find("a").attr("href")).html());
+					});
+					$(this).mouseout(function() {
+						$(".ref-tooltip").fadeOut(200);
+					});
 				});
 				angular.element("a").each(function() {
 					var a = new RegExp("/" + window.location.host + "/");

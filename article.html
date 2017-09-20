@@ -1,7 +1,48 @@
-<header id="masthead" headroom>This is the header</header>
+<nav class="paradeiser">
+		<a href="/">
+			<span class="logo">W</span>
+		</a>
+		<a href="#">
+			<div class="paradeiser_icon_canvas">
+				<i class="ion ion-ios-search"></i>
+			</div>
+			<span>Search</span>
+		</a>
+		<a href="#">
+			<div class="paradeiser_icon_canvas">
+				<i class="ion ion-ios-body"></i>
+			</div>
+			<span>Options</span>
+		</a>
+		<a href="#">
+			<div class="paradeiser_icon_canvas">
+				<i class="ion ion-ios-star"></i>
+			</div>
+			<span>Save</span>
+		</a>
 	
+		<!-- paste in as many links as you want -->
+	
+		<!-- and include the dropdown aswell -->
+		<div class="paradeiser_dropdown">
+			<a href="#paradeiser-more" id="paradeiser-dropdown">
+				<div class="paradeiser_icon_canvas">
+					<i class="ion ion-ios-more"></i>
+				</div>
+				<span>More</span>
+			</a>
+			<ul class="paradeiser_children" id="paradeiser-more">
+				<li><a href="#">Home</a></li>
+				<li><a href="#">About this project</a></li>
+				<li id="greybox"><a href="#!"></a></li>
+			</ul>
+		</div>
+	</nav>
+
 <article>
 	<h1 class="article-title">{{ wikiTitle }}</h1>
 	<div ng-bind-html="wikiData"></div>
 	<div ng-bind-html="sections" class="n_section"></div>
 </article>
+
+<div class="ref-tooltip"></div>
