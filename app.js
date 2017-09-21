@@ -23,11 +23,11 @@ app.factory("wikiService", function($http, $sce) {
 			var trustedUrl = $sce.trustAsResourceUrl(url);
 			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
 		},
-		nSections: function(params) {
+		/*nSections: function(params) {
 			var url = "https://en.wikipedia.org/w/api.php?action=parse&page=" + params.q + "&prop=sections&format=json";
 			var trustedUrl = $sce.trustAsResourceUrl(url);
 			return $http.jsonp(trustedUrl, { jsonpCallbackParam: "callback" });
-		},
+		},*/
 		search: function(params) {
 			var url = "https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=" + params.q + "&utf8=&format=json";
 			var trustedUrl = $sce.trustAsResourceUrl(url);
