@@ -846,7 +846,7 @@
 			"flagValue": -1
 			},
 		"mangle": {
-			"active": 1,
+			"active": 0,
 			"flagValue": -1
 			},
 		"max-line-len": {

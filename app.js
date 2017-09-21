@@ -1,3 +1,4 @@
+/* eslint no-var: "error" */
 var app = angular.module("wikibility", ["ngRoute"]);
 
 app.config(function($routeProvider, $locationProvider) {
